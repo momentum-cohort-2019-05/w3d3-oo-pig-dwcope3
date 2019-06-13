@@ -87,7 +87,12 @@ class Game:
         print("Welcome to Pig Dice".center(70))
         print("The first to reach 100 points wins".center(70))
         print("*"*70)
-# breakpoint()
+        print("\n")
+        print("Each turn, you will roll a die.".center(70))
+        print("If the die value is 1, the player earns no points and your turn is ended.".center(70))
+        print("\n")
+
+breakpoint()
 if __name__ == "__main__":
     game = Game(roll_die, HumanPlayer(), ComputerPlayer())
     game.start_game()
