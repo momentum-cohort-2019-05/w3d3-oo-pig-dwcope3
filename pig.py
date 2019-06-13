@@ -1,45 +1,10 @@
-import random
+import random 
+from player_classes import ComputerPlayer
+from player_classes import HumanPlayer
+
 
 def roll_die():
     return random.randint(1,6)
-
-class ComputerPlayer:
-    """
-    computer player class
-    """
-    
-
-    def __init__(self):
-        self.current_score = 0 
-
-    def start_of_game(self):
-        self.current_score = 0
-
-    def roll(self, number):
-        self.current_score += number
-
-    def roll_again(self):
-        return self.current_score < 20
-
-class HumanPlayer:
-    """
-    Human Player Class
-    """ 
-
-    def __init__(self):
-        self.current_score = 0
-
-    def start_of_game(self):
-        self.current_score = 0
-
-    def roll(self, number):
-        self.current_score += number
-
-    def roll_again(self):
-        decision = None
-        while decision is None or decision.lower()[0] not in ['r','h']:
-            decision = input("(R)oll again or (H)old? ").lower()
-        return decision[0] == "r"
 
 
 class Game:
@@ -49,7 +14,7 @@ class Game:
     def __init__(self, die, player1, player2):
         self.die = die
         self.players = [player1, player2]
-        self._current_player = None
+        self.current_player = None
         self.reset_scores()
 
     def reset_scores(self):
@@ -57,18 +22,18 @@ class Game:
         self.round_score = 0
 
     def decide_first_player(self):
-        self._current_player = random.randint(0,1)
-        print(f"Player {self._current_player + 1} starts")
+        self.current_player = random.randint(0,1)
+        print(f"Player {self.current_player + 1} starts")
 
-    def get_current_player(self):
-        return self.players[self._current_player]
+    def getcurrent_player(self):
+        return self.players[self.current_player]
 
     def switch_player(self):
-        if self._current_player == 0:
-            self._current_player = 1
+        if self.current_player == 0:
+            self.current_player = 1
         else:
-            self._current_player = 0
-        print(f"It is player {self._current_player + 1}'s turn.")
+            self.current_player = 0
+        print(f"It is player {self.current_player + 1}'s turn.")
 
     def game_ends(self):
         return self.scores[0] >= 100 or self.scores[1] >= 100
@@ -91,11 +56,11 @@ class Game:
 
         
     
-        print(f"Player {self._current_player + 1} Wins!")
+        print(f"Player {self.current_player + 1} Wins!")
 
     def run_game(self):
         turn_score = 0
-        player = self.get_current_player()
+        player = self.getcurrent_player()
         player.start_of_game()
        
         roll = self.die()
@@ -114,12 +79,14 @@ class Game:
             turn_score = 0
 
         print (f"Turn score: {turn_score}")
-        self.scores[self._current_player] += turn_score
-        print(f"Current score for player {self._current_player + 1}: {self.scores[self._current_player]}")
+        self.scores[self.current_player] += turn_score
+        print(f"Current score for player {self.current_player + 1}: {self.scores[self.current_player]}")
 
     def welcome(self):
-        print("welcome")
-
+        print("*"*70)
+        print("Welcome to Pig Dice".center(70))
+        print("The first to reach 100 points wins".center(70))
+        print("*"*70)
 # breakpoint()
 if __name__ == "__main__":
     game = Game(roll_die, HumanPlayer(), ComputerPlayer())
